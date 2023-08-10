@@ -11,7 +11,7 @@ public interface StudentService {
 
     Student updateStudent(Long studentId, Student student);
 
-    Student removeStudent(Long studentId);
+    void removeStudent(Long studentId);
 
     Collection<Student> getStudentsByAge(int age);
 }
