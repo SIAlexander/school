@@ -23,10 +23,18 @@ public class FacultyController {
         return ResponseEntity.ok(facultyAdd);
     }
 
-    @GetMapping("{facultyId}")
-    public ResponseEntity<Faculty> getFaculty(@PathVariable Long facultyId) {
-        Faculty faculty = facultyService.getFaculty(facultyId);
-        return ResponseEntity.ok(faculty);
+    @GetMapping()
+    public ResponseEntity getFaculty(@RequestParam(required = false) Long facultyId) {
+        if (facultyId != null) {
+            Faculty faculty = facultyService.getFacultyById(facultyId);
+            return ResponseEntity.ok(faculty);
+        }
+        return ResponseEntity.ok(facultyService.getAllFaculty());
+    }
+
+    @GetMapping("/showStudentFaculty")
+    public ResponseEntity<Faculty> getStudentFaculty(@RequestParam Long studentId) {
+        return ResponseEntity.ok(facultyService.getStudentFaculty(studentId));
     }
 
     @PutMapping
@@ -41,10 +49,14 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<Faculty>> getFacultyByColor(@RequestParam String color) {
+    @GetMapping("/findFaculty")
+    public ResponseEntity<Collection<Faculty>> getFacultyByColor(@RequestParam(required = false) String color,
+                                                                 @RequestParam(required = false) String name) {
         if (color != null && !color.isBlank()) {
             return ResponseEntity.ok(facultyService.getFacultyByColor(color));
+        }
+        if (name != null && !name.isBlank()) {
+            return ResponseEntity.ok(facultyService.getFacultyByName(name));
         }
         return ResponseEntity.ok(Collections.emptyList());
     }

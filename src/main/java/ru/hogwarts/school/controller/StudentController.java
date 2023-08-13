@@ -23,10 +23,13 @@ public class StudentController {
         return ResponseEntity.ok(studentAdd);
     }
 
-    @GetMapping("{studentId}")
-    public ResponseEntity<Student> getStudent(@PathVariable Long studentId) {
-        Student student = studentService.getStudent(studentId);
-        return ResponseEntity.ok(student);
+    @GetMapping()
+    public ResponseEntity getStudents(@RequestParam(required = false) Long studentId) {
+        if (studentId != null) {
+            Student student = studentService.getStudentById(studentId);
+            return ResponseEntity.ok(student);
+        }
+        return ResponseEntity.ok(studentService.getAllStudents());
     }
 
     @PutMapping
@@ -41,10 +44,20 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<Student>> getStudentsByAge(@RequestParam int age) {
-        if (age > 0) {
-            return ResponseEntity.ok(studentService.getStudentsByAge(age));
+    @GetMapping("/showStudentsFaculty")
+    public ResponseEntity<Collection<Student>> showStudentsFaculty(@RequestParam Long studentId) {
+        return ResponseEntity.ok(studentService.getStudentsFaculty(studentId));
+    }
+
+    @GetMapping(("/findStudentsAge"))
+    public ResponseEntity<Collection<Student>> getStudentsByAge(@RequestParam(required = false) Integer studentAge,
+                                                                @RequestParam(required = false) Integer minAge,
+                                                                @RequestParam(required = false) Integer maxAge) {
+        if (studentAge != null && studentAge > 0) {
+            return ResponseEntity.ok(studentService.getStudentsByAge(studentAge));
+        }
+        if (minAge != null && maxAge != null) {
+            return ResponseEntity.ok(studentService.getByAgeBetween(minAge, maxAge));
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
