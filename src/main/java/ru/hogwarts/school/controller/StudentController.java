@@ -45,7 +45,7 @@ public class StudentController {
     }
 
     @GetMapping("/showStudentsFaculty")
-    public ResponseEntity<Collection<Student>> showStudentsFaculty(@RequestParam Long studentId) {
+    public ResponseEntity<Collection<Student>> getStudentsFaculty(@RequestParam Long studentId) {
         return ResponseEntity.ok(studentService.getStudentsFaculty(studentId));
     }
 
