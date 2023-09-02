@@ -1,5 +1,6 @@
 package ru.hogwarts.school.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Avatar {
 
     @Lob
     @Type(type="org.hibernate.type.BinaryType")
+    @JsonIgnore
     private byte[] data;
 
     @OneToOne
