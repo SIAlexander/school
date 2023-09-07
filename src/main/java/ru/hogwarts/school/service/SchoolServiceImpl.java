@@ -13,7 +13,6 @@ import java.util.Collection;
 public class SchoolServiceImpl implements SchoolService {
 
     Logger logger = LoggerFactory.getLogger(SchoolServiceImpl.class);
-
     private final SchoolRepository schoolRepository;
     private final AvatarRepository avatarRepository;
 

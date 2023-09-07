@@ -13,7 +13,6 @@ import java.util.Collection;
 public class FacultyServiceImpl implements FacultyService {
 
     Logger logger = LoggerFactory.getLogger(FacultyServiceImpl.class);
-
     private final FacultyRepository facultyRepository;
 
     public FacultyServiceImpl(FacultyRepository facultyRepository) {

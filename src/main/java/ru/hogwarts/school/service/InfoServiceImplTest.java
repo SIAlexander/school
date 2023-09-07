@@ -12,7 +12,6 @@ public class InfoServiceImplTest implements InfoService {
 
     @Value("${server.port}")
     private Integer port;
-
     Logger logger = LoggerFactory.getLogger(InfoServiceImpl.class);
 
     @Override

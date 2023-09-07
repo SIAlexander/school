@@ -12,4 +12,5 @@ public interface AvatarService {
     Avatar findAvatar(Long studentId);
 
     List<Avatar> getAllAvatar(Integer pageNumber, Integer pageSize);
+
 }
