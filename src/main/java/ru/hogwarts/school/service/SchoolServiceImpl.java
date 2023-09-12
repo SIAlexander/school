@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.repository.AvatarRepository;
-import ru.hogwarts.school.repository.SchoolRepository;
+import ru.hogwarts.school.service.repository.AvatarRepository;
+import ru.hogwarts.school.service.repository.SchoolRepository;
 
 import java.util.Collection;
 

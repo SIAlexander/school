@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.repository.AvatarRepository;
-import ru.hogwarts.school.repository.StudentRepository;
+import ru.hogwarts.school.service.repository.AvatarRepository;
+import ru.hogwarts.school.service.repository.StudentRepository;
 
 import javax.transaction.Transactional;
 import java.io.*;

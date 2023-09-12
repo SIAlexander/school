@@ -13,8 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.repository.FacultyRepository;
-import ru.hogwarts.school.repository.StudentRepository;
+import ru.hogwarts.school.service.repository.FacultyRepository;
+import ru.hogwarts.school.service.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentServiceImpl;
 
 import java.util.Arrays;

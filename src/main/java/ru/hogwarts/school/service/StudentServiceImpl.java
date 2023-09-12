@@ -5,9 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.StudentNotFoundException;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.repository.StudentRepository;
+import ru.hogwarts.school.service.repository.StudentRepository;
 
-import java.util.Collection;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -80,5 +81,21 @@ public class StudentServiceImpl implements StudentService {
     public Collection<Student> getStudentsByAge(int studentAge) {
         logger.info("Was invoked method for find student by age");
         return studentRepository.findStudentsByAge(studentAge);
+    }
+    @Override
+    public Collection<String> getStudentBySortingFirstLetterName(){
+        logger.info("Was invoked method for getStudentBySortingFirstLetterName");
+        return getAllStudents().stream()
+                .sorted(Comparator.comparing(Student::getName))
+                .map(s -> s.getName().toUpperCase())
+                .filter(n -> n.startsWith("A"))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Double getAverageAgeStudents(){
+        logger.info("Was invoked method for getAverageAgeStudents");
+        return getAllStudents().stream()
+                .collect(Collectors.averagingInt(Student::getAge));
     }
 }

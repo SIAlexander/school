@@ -1,6 +1,5 @@
 package ru.hogwarts.school.service;
 
-import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
@@ -21,4 +20,8 @@ public interface StudentService {
     void removeStudent(Long studentId);
 
     Collection<Student> getStudentsByAge(int studentAge);
+
+    Collection<String> getStudentBySortingFirstLetterName();
+
+    Double getAverageAgeStudents();
 }

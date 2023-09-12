@@ -49,7 +49,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentsFaculty(studentId));
     }
 
-    @GetMapping(("/findStudentsAge"))
+    @GetMapping("/findStudentsAge")
     public ResponseEntity<Collection<Student>> getStudentsByAge(@RequestParam(required = false) Integer studentAge,
                                                                 @RequestParam(required = false) Integer minAge,
                                                                 @RequestParam(required = false) Integer maxAge) {
@@ -60,5 +60,15 @@ public class StudentController {
             return ResponseEntity.ok(studentService.getByAgeBetween(minAge, maxAge));
         }
         return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/sortedStudentFirstLetterName")
+    public ResponseEntity<Collection<String>> getStudentBySortingFirstLetterName(){
+        return ResponseEntity.ok(studentService.getStudentBySortingFirstLetterName());
+    }
+
+    @GetMapping("/getAverageAgeStudents")
+    public ResponseEntity<Double> getAverageAgeStudents(){
+        return ResponseEntity.ok(studentService.getAverageAgeStudents());
     }
 }
