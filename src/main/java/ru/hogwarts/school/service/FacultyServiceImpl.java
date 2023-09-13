@@ -4,10 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.FacultyNotFoundException;
-import ru.hogwarts.school.repository.FacultyRepository;
+import ru.hogwarts.school.service.repository.FacultyRepository;
 import ru.hogwarts.school.model.Faculty;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -80,5 +84,13 @@ public class FacultyServiceImpl implements FacultyService {
     public Collection<Faculty> getFacultyByName(String name) {
         logger.info("Was invoked method for faculty by name");
         return facultyRepository.findFacultyByNameIgnoreCase(name);
+    }
+
+    @Override
+    public String getFacultyByLongestName(){
+        logger.info("Was invoked method for Faculty By Longest Name");
+        return getAllFaculty().stream()
+                .max(Comparator.comparing(n -> n.getName().length()))
+                .get().getName();
     }
 }
