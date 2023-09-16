@@ -15,6 +15,7 @@ public class StudentServiceImpl implements StudentService {
 
     Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
     private final StudentRepository studentRepository;
+    public final Object flag = new Object();
 
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -50,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Collection<Student> getStudentsFaculty(Long studentId){
+    public Collection<Student> getStudentsFaculty(Long studentId) {
         logger.info("Was invoked method for find students faculty");
         return studentRepository.findByFaculty_Id(studentId);
     }
@@ -82,8 +83,9 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Was invoked method for find student by age");
         return studentRepository.findStudentsByAge(studentAge);
     }
+
     @Override
-    public Collection<String> getStudentBySortingFirstLetterName(){
+    public Collection<String> getStudentBySortingFirstLetterName() {
         logger.info("Was invoked method for getStudentBySortingFirstLetterName");
         return getAllStudents().stream()
                 .sorted(Comparator.comparing(Student::getName))
@@ -93,9 +95,54 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Double getAverageAgeStudents(){
+    public Double getAverageAgeStudents() {
         logger.info("Was invoked method for getAverageAgeStudents");
         return getAllStudents().stream()
                 .collect(Collectors.averagingInt(Student::getAge));
+    }
+
+    @Override
+    public void getAllStudentsThread() {
+        List<String> listStudentName = getAllStudents().stream().map(Student::getName).toList();
+
+        System.out.println(listStudentName.get(0));
+
+        new Thread(() -> {
+            System.out.println(listStudentName.get(2));
+            System.out.println(listStudentName.get(3));
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(listStudentName.get(4));
+            System.out.println(listStudentName.get(5));
+        }).start();
+
+        System.out.println(listStudentName.get(1));
+    }
+
+    @Override
+    public void getAllStudentsThreadSynchronized() {
+        List<String> listStudentName = getAllStudents().stream().map(Student::getName).toList();
+
+        printNameStudent(listStudentName.get(0));
+
+        new Thread(() -> {
+            printNameStudent(listStudentName.get(2));
+            printNameStudent(listStudentName.get(3));
+        }).start();
+
+        new Thread(() -> {
+            printNameStudent(listStudentName.get(4));
+            printNameStudent(listStudentName.get(5));
+        }).start();
+
+        printNameStudent(listStudentName.get(1));
+
+    }
+
+    public void printNameStudent(String name) {
+        synchronized (flag) {
+            System.out.println(name);
+        }
     }
 }
