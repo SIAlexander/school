@@ -106,19 +106,17 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Was invoked method for getAllStudentsThread");
         List<String> listStudentName = getAllStudents().stream().map(Student::getName).toList();
 
-        System.out.println(listStudentName.get(0));
-        System.out.println(listStudentName.get(1));
+        logger.info(listStudentName.get(0));
+        logger.info(listStudentName.get(1));
 
         new Thread(() -> {
-            logger.info("The first parallel thread is started");
-            System.out.println(listStudentName.get(2));
-            System.out.println(listStudentName.get(3));
+            logger.info(listStudentName.get(2));
+            logger.info(listStudentName.get(3));
         }).start();
 
         new Thread(() -> {
-            logger.info("The second parallel thread is started");
-            System.out.println(listStudentName.get(4));
-            System.out.println(listStudentName.get(5));
+            logger.info(listStudentName.get(4));
+            logger.info(listStudentName.get(5));
         }).start();
     }
 
@@ -131,20 +129,17 @@ public class StudentServiceImpl implements StudentService {
         printNameStudent(listStudentName);
 
         new Thread(() -> {
-            logger.info("The first parallel thread is started");
             printNameStudent(listStudentName);
             printNameStudent(listStudentName);
         }).start();
 
         new Thread(() -> {
-            logger.info("The second parallel thread is started");
             printNameStudent(listStudentName);
             printNameStudent(listStudentName);
         }).start();
     }
 
     public synchronized void printNameStudent(List<String> listStudentName) {
-        logger.info("Was invoked method for printNameStudent");
-        System.out.println(listStudentName.get(count++ % listStudentName.size()));
+        logger.info(listStudentName.get(count++ % listStudentName.size()));
     }
 }
