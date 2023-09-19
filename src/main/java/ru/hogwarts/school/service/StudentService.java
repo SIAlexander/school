@@ -24,4 +24,8 @@ public interface StudentService {
     Collection<String> getStudentBySortingFirstLetterName();
 
     Double getAverageAgeStudents();
+
+    void getAllStudentsThread();
+
+    void getAllStudentsThreadSynchronized();
 }

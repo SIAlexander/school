@@ -15,6 +15,7 @@ public class StudentServiceImpl implements StudentService {
 
     Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
     private final StudentRepository studentRepository;
+    private int count = 0;
 
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -50,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Collection<Student> getStudentsFaculty(Long studentId){
+    public Collection<Student> getStudentsFaculty(Long studentId) {
         logger.info("Was invoked method for find students faculty");
         return studentRepository.findByFaculty_Id(studentId);
     }
@@ -82,8 +83,9 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Was invoked method for find student by age");
         return studentRepository.findStudentsByAge(studentAge);
     }
+
     @Override
-    public Collection<String> getStudentBySortingFirstLetterName(){
+    public Collection<String> getStudentBySortingFirstLetterName() {
         logger.info("Was invoked method for getStudentBySortingFirstLetterName");
         return getAllStudents().stream()
                 .sorted(Comparator.comparing(Student::getName))
@@ -93,9 +95,51 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Double getAverageAgeStudents(){
+    public Double getAverageAgeStudents() {
         logger.info("Was invoked method for getAverageAgeStudents");
         return getAllStudents().stream()
                 .collect(Collectors.averagingInt(Student::getAge));
+    }
+
+    @Override
+    public void getAllStudentsThread() {
+        logger.info("Was invoked method for getAllStudentsThread");
+        List<String> listStudentName = getAllStudents().stream().map(Student::getName).toList();
+
+        logger.info(listStudentName.get(0));
+        logger.info(listStudentName.get(1));
+
+        new Thread(() -> {
+            logger.info(listStudentName.get(2));
+            logger.info(listStudentName.get(3));
+        }).start();
+
+        new Thread(() -> {
+            logger.info(listStudentName.get(4));
+            logger.info(listStudentName.get(5));
+        }).start();
+    }
+
+    @Override
+    public void getAllStudentsThreadSynchronized() {
+        logger.info("Was invoked method for getAllStudentsThreadSynchronized");
+        List<String> listStudentName = getAllStudents().stream().map(Student::getName).toList();
+
+        printNameStudent(listStudentName);
+        printNameStudent(listStudentName);
+
+        new Thread(() -> {
+            printNameStudent(listStudentName);
+            printNameStudent(listStudentName);
+        }).start();
+
+        new Thread(() -> {
+            printNameStudent(listStudentName);
+            printNameStudent(listStudentName);
+        }).start();
+    }
+
+    public synchronized void printNameStudent(List<String> listStudentName) {
+        logger.info(listStudentName.get(count++ % listStudentName.size()));
     }
 }
